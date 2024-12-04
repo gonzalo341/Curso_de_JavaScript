@@ -1,0 +1,15 @@
+{
+  "name": "ejercicios_con_arrays",
+  "version": "1.0.0",
+  "main": "ejercicioArrays1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  }
+}
