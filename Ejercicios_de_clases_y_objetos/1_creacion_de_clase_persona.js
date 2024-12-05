@@ -60,3 +60,7 @@ let persona1 = new Persona('Gonzalo', 15, 1.72, "negro")
 persona1.esMayor()
 
 persona1.agregarAuto(auto1)
+
+const listaDePersonas = [persona1]
+
+console.log(listaDePersonas)
