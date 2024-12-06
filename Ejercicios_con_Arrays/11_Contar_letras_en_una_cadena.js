@@ -1,8 +1,8 @@
 //Ejercicio 11: Contar letras en una cadena
 //Dada una cadena de texto, usa un ciclo para contar cuántas letras tiene.
 
-const string = "hola";
-let letterArrays = string.split(""); //Convierte la palabra "hola" en un arrays de letras ["H", "o", "l", "a"].
+const string = `hola`;
+let letterArrays = string.split(``); //Convierte la palabra `hola` en un arrays de letras [`H`, `o`, `l`, `a`].
 let counter = 0;
 let wordLenght = 0;
 
@@ -14,4 +14,4 @@ while (counter < letterArrays.length) {
     counter++;
 }
 
-console.log("La palabra tiene " + wordLenght + " letras.");
+console.log(`La palabra tiene ` + wordLenght + ` letras.`);

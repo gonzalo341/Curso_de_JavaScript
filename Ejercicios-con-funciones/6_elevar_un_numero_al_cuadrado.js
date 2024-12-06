@@ -1,7 +1,7 @@
 //elevar un numero al cuadrado
-const prompt = require("prompt-sync")()
+const prompt = require(`prompt-sync`)()
 
-const numero = parseInt(prompt("ingrese el numero "))
+const numero = parseInt(prompt(`ingrese el numero `))
 
 function cuadrado(numero){
     return numero * numero 

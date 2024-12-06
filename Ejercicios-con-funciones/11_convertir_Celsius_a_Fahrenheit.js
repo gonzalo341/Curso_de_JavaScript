@@ -1,7 +1,7 @@
 //convertir grados Celsius a Fahrenheit
-const prompt = require("prompt-sync")()
+const prompt = require(`prompt-sync`)()
 
-const a = parseInt(prompt("ingrese la temperatura "))
+const a = parseInt(prompt(`ingrese la temperatura `))
 
 function temperatura(a){
     return (a * 9/5) + 32

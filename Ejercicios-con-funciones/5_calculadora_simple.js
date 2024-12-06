@@ -1,22 +1,22 @@
 //calculadora simple
-const prompt = require("prompt-sync")()
+const prompt = require(`prompt-sync`)()
 
-let a = parseInt(prompt("ingrese el valor de a "))
-let b = parseInt(prompt("ingrese el valor de b "))
-let operacion = prompt("ingrese la operacion (+ , -, *, /) que va a realizar ")
+let a = parseInt(prompt(`ingrese el valor de a `))
+let b = parseInt(prompt(`ingrese el valor de b `))
+let operacion = prompt(`ingrese la operacion (+ , -, *, /) que va a realizar `)
 
 function calculadora(a,b,operacion) {
     switch (operacion) {
-        case "+":
+        case `+`:
             return a + b
             break
-        case "-":
+        case `-`:
             return a - b
             break
-        case "*":
+        case `*`:
             return a * b
             break
-        case "/":
+        case `/`:
             return a / b
             break
     }

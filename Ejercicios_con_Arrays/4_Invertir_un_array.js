@@ -10,7 +10,7 @@ let counterInvertido = listaDeNumeros.length - 1;
 
 //El while va a funcionar hasta que counter sea mayor que el largo de la lista
 while (counter < listaDeNumeros.length) {
-    //listaDeNumerosInvertida.unshift("valor que se va a agregar al principio")
+    //listaDeNumerosInvertida.unshift(`valor que se va a agregar al principio`)
     listaDeNumerosInvertida.unshift(listaDeNumeros[counter]);
     counter++;
 }
@@ -19,7 +19,7 @@ console.log(listaDeNumerosInvertida);
 
 //El counter empieza como el largo de la lista - 1 y el while va a funcionar hasta que sea menor que 0
 while (counterInvertido >= 0) {
-    //listaDeNumerosInvertida.push("valor que se va a agregar al final")
+    //listaDeNumerosInvertida.push(`valor que se va a agregar al final`)
     segundaListaDeNumerosInvertida.push(listaDeNumeros[counterInvertido]);
     counterInvertido--;
 }

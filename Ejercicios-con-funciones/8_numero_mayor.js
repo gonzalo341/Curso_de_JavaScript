@@ -1,8 +1,8 @@
 //numero mayor
-const prompt = require("prompt-sync")()
+const prompt = require(`prompt-sync`)()
 
-const a = parseInt(prompt("ingrese el numero "))
-const b = parseInt(prompt("ingrese el numero "))
+const a = parseInt(prompt(`ingrese el numero `))
+const b = parseInt(prompt(`ingrese el numero `))
 
 function mayor(a,b){
     if (a>b){

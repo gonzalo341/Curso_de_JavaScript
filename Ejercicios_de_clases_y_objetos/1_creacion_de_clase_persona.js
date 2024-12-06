@@ -45,17 +45,17 @@ class Auto {
             console.log(`Este auto no es para familias grandes`)
         }
         else {
-            console.log("Este auto es para familias grandes")
+            console.log(`Este auto es para familias grandes`)
         }
     }
 }
 
 
-const auto1 = new Auto("Fiat", "siena 1.5", "gris", 4)
+const auto1 = new Auto(`Fiat`, `siena 1.5`, `gris`, 4)
 
 //Personas
 
-let persona1 = new Persona('Gonzalo', 15, 1.72, "negro")
+let persona1 = new Persona('Gonzalo', 15, 1.72, `negro`)
 
 persona1.esMayor()
 

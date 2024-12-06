@@ -1,8 +1,8 @@
 //secuencia Fibonacci
-const prompt = require("prompt-sync")()
+const prompt = require(`prompt-sync`)()
 
 let secuenciaFibonacci = []
-let contador = parseInt(prompt("ingrese el numero "))/2 - 1
+let contador = parseInt(prompt(`ingrese el numero `))/2 - 1
 let primerNumero = 0
 let segundoNumero = 1
 

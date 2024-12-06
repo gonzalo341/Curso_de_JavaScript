@@ -13,25 +13,28 @@
 const prompt = require('prompt-sync')()
 let ciclo = true
 
+//Lista de Libros: lista de libros guardados
+let listaDeLibros = [Matematica]
+
 //Inicio
 while (ciclo === true) {
-    const Usuario = prompt("Buen dia,  \n 1) Cliente \n 2) Bibliotecario \n ")
+    const Usuario = prompt(`Buen dia,  \n 1) Cliente \n 2) Bibliotecario \n `)
     switch (Usuario) {
-        case "1":
+        case `1`:
             while (ciclo === true){
-                const accion = prompt("¿Que desea hacer? \n 1) Buscar libro en el inventario \n 2) Pedir un libro")
+                const accion = prompt(`¿Que desea hacer? \n 1) Buscar libro en el inventario \n 2) Pedir un libro`)
                 switch (accion) {
-                    case "1":
+                    case `1`:
 
                         break
-                    case "2":
+                    case `2`:
                         break
                     default:
                         break
                 }
             }
             break
-        case "2":
+        case `2`:
             break
         default:
             break
@@ -45,19 +48,19 @@ class Libro {
     }
 
     agregarTema() {
-        let tema = prompt("¿Cual es el tema del libro?")
+        let tema = prompt(`¿Cual es el tema del libro?`)
         while (ciclo === true) {
-            const verificacion = prompt(`¿El tema es ${tema}? \n 1) Correcto \n 2) Incorrecto \n 3) Borrar Tema`)
+            const verificacion = prompt(`¿El tema es ${ tema }?\n 1) Correcto \n 2) Incorrecto \n 3) Borrar Tema`)
             switch (verificacion) {
-                case "1":
+                case `1`:
                     this.tema = tema
-                    console.log("Tema agregado")
+                    console.log(`Tema agregado`)
                     break
-                case "2":
-                    tema = prompt("¿Cual es el tema del libro?")
+                case `2`:
+                    tema = prompt(`¿Cual es el tema del libro?`)
                     continue
-                case "3":
-                    console.log("Tema Sin Agregar")
+                case `3`:
+                    console.log(`Tema Sin Agregar`)
                     ciclo = false
                     break
                 default:
@@ -70,19 +73,22 @@ class Libro {
 class Biblioteca {
     constructor(numero, listaDeLibros) {
         this.numero = numero
-        this.listaDeLibros = listaDeLibros
+        this.listaDeLibros1 = listaDeLibros1
     }
 
     buscarLibro(){
         while (ciclo === true) {
-            const buscarPorNombre = ("¿Conoce el nombre del libro? \n 1) Si, conosco el Nombre. \n 2) No sé el nombre del libro. \n 3) Salir")
+            const buscarPorNombre = prompt(`¿Conoce el nombre del libro? \n 1) Si, conosco el Nombre. \n 2) No sé el nombre del libro. \n 3) Salir`)
             switch (buscarPorNombre) {
-                case "1":
-                    buscarPorNombre.includes
+                case `1`:
+                    const nombreDelLibro= prompt(`¿Cual es el nombre del libro que desea buscar?`)
+                    if (buscarPorNombre.includes(nombreDelLibro) === true){
+                        console.log(`El libro ${nombreDelLibro} si se encuentra disponible`)
+                    }
                     break
-                case "2":
+                case `2`:
                     break
-                case "3":
+                case `3`:
                     ciclo = false
                     break
                 default:
@@ -94,8 +100,8 @@ class Biblioteca {
 
     agregarLibro(){
         //Caracteristicas del libro (Nombre y Autor)
-        const nombre = prompt("¿Que nombre le desea agregar al libro?")
-        const autor = prompt("¿De que autor es el libro?")
+        const nombre = prompt(`¿Que nombre le desea agregar al libro?`)
+        const autor = prompt(`¿De que autor es el libro?`)
 
         //Agregar Nombre y Autor a la clase Libro
         const nuevoLibro = new Libro(nombre)
@@ -107,9 +113,9 @@ class Biblioteca {
     }
 
     eliminarLibro(){
+        const nombreDelLibroEliminado = prompt(`¿Cual es el nombre del libro que desea eliminar?`)
 
     }
 }
 
-//Lista de Libros: lista de libros guardados
-let listaDeLibros = []
+console.log(buscarPorNombre.includes(listaDeLibros))

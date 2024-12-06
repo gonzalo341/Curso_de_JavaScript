@@ -8,7 +8,7 @@ let counter = 0
 while (counter < listaDeNumeros.length) {
     //Si el numero de listaDeNumeros[counter] es menor que el numeros anterior ListaDeNumeros[counter - 1] entonces se activa el if
     if (listaDeNumeros[counter - 1] > listaDeNumeros[counter]){
-        console.log(" El Arrays no está ordenado de menor a mayor porque " + listaDeNumeros[counter - 1] + " > " + listaDeNumeros[counter])
+        console.log(` El Arrays no está ordenado de menor a mayor porque ` + listaDeNumeros[counter - 1] + ` > ` + listaDeNumeros[counter])
         break
     }
     //por cada ciclo el counter va aumentando hasta ser mayor que el largo de la lista
