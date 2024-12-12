@@ -1,5 +1,5 @@
 import promptSync from 'prompt-sync';
-import { Biblioteca, Usuario, Libro } from './clases.js';
+import { Biblioteca, Usuario, Libro } from './clases_1.js';
 
 const prompt = promptSync();
 let biblioteca = new Biblioteca();
@@ -14,9 +14,9 @@ biblioteca.usuarios.push(usuarioDePrueba);
 
 let ciclo = true;
 
-while (ciclo) {
-    const categoria = prompt('Buen día. ¿A qué categoría pertenece? \n1) Cliente \n2) Bibliotecario \n3) Salir \n');
+const categoria = prompt('Buen día. ¿A qué categoría pertenece? \n1) Cliente \n2) Bibliotecario \n3) Salir \n');
 
+while (ciclo) {
     switch (categoria) {
         case '1':  // Cliente
             const accionCliente = prompt('¿Desea iniciar sesión o registrarse? \n1) Iniciar sesión \n2) Registrarse \n3) Salir \n');
