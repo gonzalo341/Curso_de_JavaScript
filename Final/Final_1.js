@@ -1,40 +1,80 @@
-// Biblioteca Virtual
+import promptSync from 'prompt-sync';
+import { Biblioteca, Usuario, Libro } from './clases.js';
 
-const prompt = require("prompt-sync")()
-let ciclo = true
+const prompt = promptSync();
+let biblioteca = new Biblioteca();
 
-//Importar Clases
-import {
-    Libro, Biblioteca
-} from './clases.js'
+// Agregar un libro "Matematica 1" de Gonzalo con 5 copias
+const libroMatematica = new Libro("Matematica 1", "Gonzalo", 5);
+biblioteca.libros.push(libroMatematica);
 
-//Lista de Libros: lista de libros guardados
-let listaDeLibros = ["Matematica"]
+// Agregar un usuario ya registrado para prueba del inicio de seción
+const usuarioDePrueba = new Usuario("Gonzalo", "hola");
+biblioteca.usuarios.push(usuarioDePrueba);
 
-//Inicio
-while (ciclo === true) {
-    const Usuario = prompt("Buen dia a que categoria pertenece? \n 1) Cliente. \n 2) Bibliotecario. \n ) // A que categoria pertenece el usuario")
-    switch (Usuario) {
-        case 1:
-            while (ciclo === true) {
-                const accion = prompt("¿Que desea hacer? \n 1) Buscar libro en el inventario \n 2) Pedir un libro")
-                switch (accion) {
-                    case 1:
-                        Biblioteca.buscarLibro()
-                        break
-                    case 2:
-                        pedirLibro()
-                        break
-                    default:
-                        break
-                }
+let ciclo = true;
+
+while (ciclo) {
+    const categoria = prompt('Buen día. ¿A qué categoría pertenece? \n1) Cliente \n2) Bibliotecario \n3) Salir \n');
+
+    switch (categoria) {
+        case '1':  // Cliente
+            const accionCliente = prompt('¿Desea iniciar sesión o registrarse? \n1) Iniciar sesión \n2) Registrarse \n3) Salir \n');
+            let usuarioActual = null;
+
+            switch (accionCliente) {
+                case '1':
+                    usuarioActual = Usuario.iniciarSesion(biblioteca.usuarios);
+                    if (usuarioActual) {
+                        const accionClientePostLogin = prompt('¿Qué desea hacer? \n1) Pedir libro directamente \n2) Buscar libro y pedirlo \n3) Salir \n');
+                        switch (accionClientePostLogin) {
+                            case '1':
+                                biblioteca.pedirLibroDirectamente();
+                                break;
+                            case '2':
+                                biblioteca.pedirLibroConBusqueda();
+                                break;
+                            case '3':
+                                ciclo = false;
+                                break;
+                            default:
+                                console.log('Opción no válida');
+                        }
+                    }
+                    break;
+                case '2':
+                    Usuario.crearCuenta(biblioteca.usuarios);
+                    break;
+                case '3':
+                    ciclo = false;
+                    break;
+                default:
+                    console.log('Opción no válida');
             }
-            break
-        case 2:
-            break
+            break;
+
+        case '2':  // Bibliotecario
+            const accionBibliotecario = prompt('¿Qué desea hacer? \n1) Agregar libro \n2) Eliminar libro \n3) Salir \n');
+            switch (accionBibliotecario) {
+                case '1':
+                    biblioteca.agregarLibro();
+                    break;
+                case '2':
+                    biblioteca.eliminarLibro();
+                    break;
+                case '3':
+                    ciclo = false;
+                    break;
+                default:
+                    console.log('Opción no válida');
+            }
+            break;
+
+        case '3':  // Salir
+            ciclo = false;
+            break;
+
         default:
-            break
+            console.log('Opción no válida');
     }
 }
-
-console.log(buscarPorNombre.includes(listaDeLibros))

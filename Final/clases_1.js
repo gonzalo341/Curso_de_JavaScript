@@ -1,116 +1,123 @@
-// Clases
+import promptSync from 'prompt-sync';
+const prompt = promptSync();
 
 export class Libro {
-    constructor(nombre, autor) {
-        this.nombre = nombre
-        this.autor = autor
+    constructor(nombre, autor, cantidad) {
+        this.nombre = nombre;
+        this.autor = autor;
+        this.cantidad = cantidad || 1; //si no tiene una cantidad especifica es entonces hay 1 libro
+    }
+}
+
+export class Usuario {
+    constructor(nombre, contraseña) {
+        this.nombre = nombre;
+        this.contraseña = contraseña;
     }
 
-    // Funcion para que en caso de conocer el tema del libro se pueda agregar para una busqueda mas precisa.
-    agregarTema() {
-        const tema = prompt("¿Cual es el tema del libro?")
-        while (ciclo === true) {
-            const verificacion = prompt(`¿El tema es ${tema}?\n 1) Correcto \n 2) Incorrecto \n 3) Borrar Tema`) //Confirmacion de si el tema agregado es correcto.
-            switch (verificacion) {
-                case 1: // Es correcto y el tema se agrega.
-                    this.tema = tema
-                    console.log("Tema agregado") // Le avisa al usuario que el procedimiento ya termino.
-                    break
-                case 2: // Es incorrecto y se vuelve a pedir el tema
-                    tema = prompt("¿Cual es el tema del libro?") // Vuelve a preguntar por el tema.
-                    continue // Reinicia el ciclo para que vuelva a verificar si el tema esta bien.
-                case 3: // El usuario no desea agregar un tema.
-                    console.log("Tema Sin Agregar") // Le avisa que el tema no se agrego al libro.
-                    ciclo = false // Termina el while.
-                    break
-                default:
-                    break
-            }
+    // Crear cuenta de usuario
+    static crearCuenta(usuarios) {
+        const nombre = prompt('Ingrese su nombre de usuario: \n');
+        const contraseña = prompt('Ingrese su contraseña: \n');
+        const usuarioExistente = usuarios.find(user => user.nombre === nombre); //busca si en los usuarios registrados ya existe el nombre del usuario nuevo
+
+        if (usuarioExistente) { //Si el nombre del usuario ya existe solo avisa que ya existe el usuario
+            console.log('Este usuario ya existe.');
+        } else { //Si el nombre del usuario no esta registrado lo agrega a lista de usuarios
+            const nuevoUsuario = new Usuario(nombre, contraseña);
+            usuarios.push(nuevoUsuario);
+            console.log('Cuenta creada con éxito.');
         }
     }
 
-    // Cada libro tendra una cantidad en el inventario.
-    agregarCantidad() {
-        const cantidad = prompt("¿cuantos libros hay para agregar al inventario?") //Pregunta por la cantidad de libros.
+    // Iniciar sesión de usuario
+    static iniciarSesion(usuarios) {
+        const nombre = prompt('Ingrese su nombre de usuario: \n');
+        const contraseña = prompt('Ingrese su contraseña: \n');
+        const usuario = usuarios.find(user => user.nombre === nombre && user.contraseña === contraseña); //Busca si el nombre de usuario y contraseña coinciden en la lista de usuarios
+
+        if (usuario) {
+            console.log(`Bienvenido ${usuario.nombre}!`);
+            return usuario;  // Retorna el usuario si se encuentra
+        } else {
+            console.log('Nombre de usuario o contraseña incorrectos.');
+            return null;  // Si no se encuentra el usuario, retorna null
+        }
     }
 }
 
 export class Biblioteca {
-    constructor(numero, undefined) {
-        this.numero = numero
-        this.undefined = undefined
+    constructor() {
+        this.libros = [];  // Lista de libros registrados en la biblioteca
+        this.usuarios = [];  // Lista de usuarios registrados
     }
 
-    buscarLibro() {
-        ciclo = true
-        while (ciclo) {
-            // Preguntar sobre si conoce el nombre del libro, en el caso de que no lo conosca se preguntara sobre el tema del libro o la editorial
-            const buscarPorNombre = prompt("¿Conoce el nombre del libro? \n 1) Si, conosco el Nombre. \n 2) No sé el nombre del libro. \n 3) Salir")
-            switch (buscarPorNombre) {
+    // Función para pedir un libro directamente (sin búsqueda)
+    pedirLibroDirectamente() {
+        const nombreDelLibro = prompt('¿Qué libro desea pedir? \n');
+        const libro = this.libros.find(libro => libro.nombre.toLowerCase() === nombreDelLibro.toLowerCase()); //si el nombreDelLibro se encuntra en los libros guardados retorna el nombre del libro, si no retorna undefined
 
-                case 1: // Si conoce el nombre del libro, pregunta como se llama y lo verifica si esta disponible en la lista de libros
-                    const nombreDelLibro = prompt("¿Cual es el nombre del libro que desea buscar?")
-                    if (buscarPorNombre.includes(nombreDelLibro) === true) {
-                        console.log(`El libro ${nombreDelLibro} si se encuentra disponible`)
-                    }
-                    break
-
-                case 2:
-                    break
-
-                case 3:
-                    ciclo = false
-                    break
-
-                default:
-                    break
+        if (libro) { //Si libro tiene un valor entonces es True y se activa el if
+            const dias = parseInt(prompt('¿Cuántos días desea pedir el libro? \n'));
+            if (libro.cantidad > 0) { //Solo se activa si hay libros disponibles
+                libro.cantidad--; //Se resta la cantidad de libros
+                console.log(`Se ha pedido el libro "${libro.nombre}". Quedan ${libro.cantidad} copias. Lo tendrá por ${dias} días.`);
+            } else { // Si hay 0 libros entonces avisa que no hay copias disponibles
+                console.log('No hay copias disponibles de este libro.');
             }
-
+        } else { //Si libro es undefined el if no se ejecuta
+            console.log('El libro no está disponible en la biblioteca.');
         }
     }
 
-    agregarLibro() {
-        //Caracteristicas del libro (Nombre y Autor)
-        const nombre = prompt("¿Que nombre le desea agregar al libro?")
-        const autor = prompt("¿De que autor es el libro?")
+    // Función para primero buscar un libro y luego pedirlo si esta disponible
+    pedirLibroConBusqueda() {
+        const nombreDelLibro = prompt('¿Qué libro desea pedir? \n'); // Primero preguntamos por el nombre del libro
+        const libro = this.libros.find(libro => libro.nombre.toLowerCase() === nombreDelLibro.toLowerCase()); // Buscamos el libro en la lista de libros
 
-        //Agregar Nombre y Autor a la clase Libro
-        const nuevoLibro = new Libro(nombre)
-        const nuevoAutor = new Libro(autor)
+        if (libro) { // Primero verifica si el libro fue encontrado
+            if (libro.cantidad > 0) { // Luego verifica si hay libros disponibles
+                console.log(`El libro "${libro.nombre}" está disponible. Hay ${libro.cantidad} copias.`); // Avisamos que hay copias disponibles y dice cuantas copias hay
 
-        //Agregar Libro a la lista de libros disponibles
-
-        this.libros = libro
-    }
-
-    eliminarLibro() {
-        ciclo = true
-        const nombreDelLibroEliminado = prompt("¿Cual es el nombre del libro que desea eliminar?")
-        if (this.libros.includes(nombreDelLibroEliminado)) {
-            let indice = this.libros.includes(nombreDelLibroEliminado)
-            this.libros.splice(indice);
-            console.log(`El libro "${nombreDelLibroEliminado}" ha sido eliminado de la biblioteca.`);
+                // Preguntamos si el usuario quiere pedir el libro
+                const deseaPedir = prompt('¿Desea pedir el libro? (sí/no) \n').toLowerCase();
+                if (deseaPedir === 'sí' || deseaPedir === 'si') {
+                    const dias = parseInt(prompt('¿Cuántos días desea pedir el libro? \n')); // Si el usuario quiere pedirlo, preguntamos por cuántos días lo quiere pedir
+                    libro.cantidad--; // Reducimos la cantidad de copias disponibles
+                    console.log(`Se ha pedido el libro "${libro.nombre}". Quedan ${libro.cantidad} copias. Lo tendrá por ${dias} días.`);
+                } else {
+                    console.log('No se ha realizado el préstamo del libro.');
+                }
+            } else {
+                console.log('Lo siento, no hay copias disponibles de este libro.'); // Si no hay copias disponibles, avisa al usuario
+            }
         } else {
-            console.log('El libro no existe en la biblioteca.');
-        }
-
-    }
-
-    //la funcion pedirLibro() buscara si el libro esta disponible, luego de confirmar el pedido restara el libro del inventario.
-    PedirLibro() {
-        ciclo = true
-        if (nombreDelLibro.includes(listaDeLibros) === true) {
-            while (ciclo) {
-
-            }
-
-        } 
-        else {
-            console.log('No hay copias disponibles de este libro.');
+            console.log('El libro no está disponible en la biblioteca.');
         }
     }
 
-    devolverLibro(nombre) {
-        ciclo = true
+
+    // Función para agregar un libro
+    agregarLibro() {
+        const nombre = prompt('¿Qué nombre le desea agregar al libro? \n');
+        const autor = prompt('¿De qué autor es el libro? \n');
+        const cantidad = parseInt(prompt('¿Cuántas copias desea agregar? \n'), 10);
+
+        const nuevoLibro = new Libro(nombre, autor, cantidad);
+        this.libros.push(nuevoLibro);
+        console.log(`El libro "${nombre}" de ${autor} ha sido agregado con ${cantidad} copias.`);
+    }
+
+    // Función para eliminar un libro
+    eliminarLibro() {
+        const nombreDelLibro = prompt('¿Qué libro desea eliminar? \n');
+        const index = this.libros.findIndex(libro => libro.nombre.toLowerCase() === nombreDelLibro.toLowerCase());
+
+        if (index !== -1) {
+            this.libros.splice(index, 1); // Eliminar el libro encontrado
+            console.log(`El libro "${nombreDelLibro}" ha sido eliminado de la biblioteca.`);
+        } else {
+            console.log('El libro no está registrado en la biblioteca.');
+        }
     }
 }
